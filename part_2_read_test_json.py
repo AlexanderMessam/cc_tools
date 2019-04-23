@@ -9,22 +9,22 @@ def make_game_library_from_json( json_data ):
     ### Begin Add Code Here ###
     #Loop through the json_data
     with open(json_data, 'r') as f:
-        data = json.load(f)
+        jsonData = json.load(f)
 
     # making Platform objects
-    chipCallenge1Plat = test_data.Platform("Atari Lynx", "1989")
-    chipCallenge2Plat = test_data.Platform("Atari Lynx", "1989")
-    animalCrossingPlat = test_data.Platform("Game Cube", "2001")
+    platformList = []
+    for i in range(0,len(jsonData["Game Library"])):
+        platformList.append(test_data.Platform(jsonData["Game Library"][i]["Platform"]["Platform Name"], jsonData["Game Library"][i]["Platform"]["Launch Year"]))
 
     # making Game objects
-    chipCallenge1 = test_data.Game("Chip's Challenge", chipCallenge1Plat, "1989")
-    chipCallenge2 = test_data.Game("Chip's Challenge 2", chipCallenge2Plat, "2015")
-    animalCrossing = test_data.Game("Animal Crossing", animalCrossingPlat, "2001")
+    gameList = []
+    for i in range(0,len(jsonData["Game Library"])):
+       gameList.append(test_data.Game(jsonData["Game Library"][i]["Title"], platformList[i], jsonData["Game Library"][i]["Year"]))
 
     # adding game objects to Game Library
-    game_library.add_game(chipCallenge1)
-    game_library.add_game(chipCallenge2)
-    game_library.add_game(animalCrossing)
+    game_library.add_game(gameList[0])
+    game_library.add_game(gameList[1])
+    game_library.add_game(gameList[2])
 
     return game_library
 
